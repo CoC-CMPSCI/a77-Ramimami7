@@ -9,23 +9,64 @@ const int SIZE = 10;
 const int NUM_ROWS = 6;
 const int NUM_COLS = 5;
 
-void findMaxSum(int[], int[][NUM_COLS], int, int);
-void findMaxElm(int[], int[][NUM_COLS], int, int);
-void findMaxVal(int[], int[][NUM_COLS], int, int);
+void findMaxSum(int result[], int num[][NUM_COLS], int rows, int cols);
+void findMaxElm(int result[], int num[][NUM_COLS], int rows, int cols);
+void findMaxVal(int result[], int num[][NUM_COLS], int rows, int cols);
 
 void findMaxSum(int result[], int num[][NUM_COLS], int rows, int cols)
 {
-    // TODO: find the row whose sum is the largest, copy that row into result.
+    int maxSum = num[0][0];
+    int maxRow = 0;
+
+    for (int r = 0; r < rows; r++) {
+        int sum = 0;
+        for (int c = 0; c < cols; c++) {
+            sum += num[r][c];
+        }
+        if (sum > maxSum || r == 0) {
+            maxSum = sum;
+            maxRow = r;
+        }
+    }
+
+    // Copy the row with the largest sum into result
+    for (int c = 0; c < cols; c++) {
+        result[c] = num[maxRow][c];
+    }
 }
 
 void findMaxElm(int result[], int num[][NUM_COLS], int rows, int cols)
 {
-    // TODO: for each row, store the maximum element of that row in result[i].
+    // For each row, store the maximum element in result[i]
+    for (int r = 0; r < rows; r++) {
+        int maxVal = num[r][0];
+        for (int c = 1; c < cols; c++) {
+            if (num[r][c] > maxVal) {
+                maxVal = num[r][c];
+            }
+        }
+        result[r] = maxVal;
+    }
 }
 
 void findMaxVal(int result[], int num[][NUM_COLS], int rows, int cols)
 {
-    // TODO: find the cell (r,c) holding the global maximum value; copy row r.
+    int globalMax = num[0][0];
+    int maxRow = 0;
+
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            if (num[r][c] > globalMax) {
+                globalMax = num[r][c];
+                maxRow = r;
+            }
+        }
+    }
+
+    // Copy the row containing the global maximum into result
+    for (int c = 0; c < cols; c++) {
+        result[c] = num[maxRow][c];
+    }
 }
 
 #endif
